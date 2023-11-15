@@ -1,8 +1,9 @@
 package stream
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 type person struct {
@@ -99,4 +100,13 @@ func TestGroupBy(t *testing.T) {
 	group := GroupBy[string, person](persons, func(p person) string { return p.name })
 	assert.Equal(t, 2, len(group["Bob"]))
 	assert.Equal(t, 1, len(group["Alice"]))
+}
+
+func TestStream_ForEach(t *testing.T) {
+	forEach := []string{}
+	Of[string]([]string{"Hello", "World"}).ForEach(func(s string) {
+		forEach = append(forEach, s)
+	})
+
+	assert.Equal(t, []string{"Hello", "World"}, forEach)
 }
