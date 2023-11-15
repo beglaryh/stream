@@ -78,3 +78,12 @@ func TestStream_NoneMatch(t *testing.T) {
 	match = Of(numbers).NoneMatch(func(a int) bool { return a == 6 })
 	assert.Equal(t, true, match)
 }
+
+func TestStream_FindFirst(t *testing.T) {
+	numbers := []int{5, 4, 3, 2, 1}
+	first := Of(numbers).FindFirst()
+	assert.Equal(t, 5, first.Get())
+
+	first = Of(numbers).Filter(func(i int) bool { return i > 5 }).FindFirst()
+	assert.Equal(t, false, first.IsPresent())
+}

@@ -1,5 +1,7 @@
 package stream
 
+import . "github.com/beglaryh/optional"
+
 type Stream[T any] struct {
 	ts []T
 }
@@ -48,6 +50,18 @@ func (stream Stream[T]) NoneMatch(anyFunction func(t T) bool) bool {
 		}
 	}
 	return true
+}
+
+func (stream Stream[T]) FindFirst() *Optional[T] {
+	if len(stream.ts) == 0 {
+		empty := Empty[T]()
+		return &empty
+	}
+	optional, err := With[T](&stream.ts[0])
+	if err != nil {
+		panic(err)
+	}
+	return optional
 }
 
 func mergeSort[T any](es []T, compare func(a, b T) bool) []T {
