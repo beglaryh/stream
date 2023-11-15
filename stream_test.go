@@ -47,8 +47,8 @@ func TestStream_Map(t *testing.T) {
 
 func TestStream_Sort(t *testing.T) {
 	numbers := []int{5, 4, 3, 2, 1}
-	sorted := Of(numbers).Sort(func(a, b int) bool { return a < b })
-	assert.Equal(t, []int{1, 2, 3, 4, 5}, sorted.Slice())
+	sorted := Of(numbers).Sort(func(a, b int) bool { return a < b }).Slice()
+	assert.Equal(t, []int{1, 2, 3, 4, 5}, sorted)
 
 	persons := []person{{"Bob", 100}, {"Bob", 50}, {"Alice", 30}}
 	sortedPersons := Of[person](persons).Sort(func(a, b person) bool {
@@ -56,9 +56,9 @@ func TestStream_Sort(t *testing.T) {
 			return a.age < b.age
 		}
 		return a.name < b.name
-	})
+	}).Slice()
 
-	assert.Equal(t, []person{{"Alice", 30}, {"Bob", 50}, {"Bob", 100}}, sortedPersons.Slice())
+	assert.Equal(t, []person{{"Alice", 30}, {"Bob", 50}, {"Bob", 100}}, sortedPersons)
 }
 
 func TestStream_AnyMatch(t *testing.T) {

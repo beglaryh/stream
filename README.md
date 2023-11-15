@@ -31,7 +31,7 @@ names := Map[person, string](persons, func(p person) string {
 ## Sorting
 ```go
 numbers := []int{5, 4, 3, 2, 1}
-sorted := Of(numbers).Sort(func(a, b int) bool { return a < b })
+sorted := Of(numbers).Sort(func(a, b int) bool { return a < b }).Slice()
 
 persons := []person{{"Bob", 100}, {"Bob", 50}, {"Alice", 30}}
 sortedPersons := Of[person](persons).Sort(func(a, b person) bool {
@@ -39,7 +39,7 @@ sortedPersons := Of[person](persons).Sort(func(a, b person) bool {
         return a.age < b.age
     }
     return a.name < b.name
-})
+}).Slice()
 ```
 
 ## Any Match
