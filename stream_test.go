@@ -93,3 +93,10 @@ func TestFlatMap(t *testing.T) {
 	flattened := FlatMap[int](numbers).Slice()
 	assert.Equal(t, []int{1, 2, 3, 4, 5, 6}, flattened)
 }
+
+func TestGroupBy(t *testing.T) {
+	persons := []person{{"Bob", 100}, {"Bob", 50}, {"Alice", 30}}
+	group := GroupBy[string, person](persons, func(p person) string { return p.name })
+	assert.Equal(t, 2, len(group["Bob"]))
+	assert.Equal(t, 1, len(group["Alice"]))
+}

@@ -39,6 +39,15 @@ func FlatMap[T any](input [][]T) Stream[T] {
 	return Stream[T]{ts: ts}
 }
 
+func GroupBy[K comparable, T any](ts []T, getKey func(t T) K) map[K][]T {
+	response := map[K][]T{}
+	for _, t := range ts {
+		key := getKey(t)
+		response[key] = append(response[key], t)
+	}
+	return response
+}
+
 func (stream Stream[T]) Sort(sortFunction func(a, b T) bool) Stream[T] {
 	ns := mergeSort[T](stream.ts, sortFunction)
 	return Stream[T]{ts: ns}
