@@ -83,6 +83,12 @@ func (stream Stream[T]) FindFirst() *Optional[T] {
 	return optional
 }
 
+func (stream Stream[T]) ForEach(forEach func(t T)) {
+	for _, t := range stream.ts {
+		forEach(t)
+	}
+}
+
 func mergeSort[T any](es []T, compare func(a, b T) bool) []T {
 	if len(es) < 2 {
 		return es
