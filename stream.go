@@ -29,6 +29,16 @@ func Map[F, T any](fs []F, mapper func(f F) T) Stream[T] {
 	return ns
 }
 
+func FlatMap[T any](input [][]T) Stream[T] {
+	var ts []T
+	for _, array := range input {
+		for _, t := range array {
+			ts = append(ts, t)
+		}
+	}
+	return Stream[T]{ts: ts}
+}
+
 func (stream Stream[T]) Sort(sortFunction func(a, b T) bool) Stream[T] {
 	ns := mergeSort[T](stream.ts, sortFunction)
 	return Stream[T]{ts: ns}

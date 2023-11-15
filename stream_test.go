@@ -87,3 +87,9 @@ func TestStream_FindFirst(t *testing.T) {
 	first = Of(numbers).Filter(func(i int) bool { return i > 5 }).FindFirst()
 	assert.Equal(t, false, first.IsPresent())
 }
+
+func TestFlatMap(t *testing.T) {
+	numbers := [][]int{{1, 2, 3}, {4, 5, 6}}
+	flattened := FlatMap[int](numbers).Slice()
+	assert.Equal(t, []int{1, 2, 3, 4, 5, 6}, flattened)
+}
