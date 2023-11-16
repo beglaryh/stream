@@ -32,9 +32,7 @@ func Map[F, T any](fs []F, mapper func(f F) T) Stream[T] {
 func FlatMap[T any](input [][]T) Stream[T] {
 	var ts []T
 	for _, array := range input {
-		for _, t := range array {
-			ts = append(ts, t)
-		}
+		ts = append(ts, array...)
 	}
 	return Stream[T]{ts: ts}
 }
