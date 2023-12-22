@@ -46,6 +46,29 @@ func GroupBy[K comparable, T any](ts []T, getKey func(t T) K) map[K][]T {
 	return response
 }
 
+func (s Stream[T]) Peek(peekFunc func(t T)) Stream[T] {
+	go peek(s, peekFunc)
+	return s
+}
+
+func peek[T any](s Stream[T], peekFunc func(t T)) {
+	for _, t := range s.ts {
+		peekFunc(t)
+	}
+}
+
+func (s Stream[T]) Reduce(identity T, reduce func(a, b T) T) T {
+	var a T
+	for i, e := range s.ts {
+		if i == 0 {
+			a = reduce(identity, e)
+		} else {
+			a = reduce(a, e)
+		}
+	}
+	return a
+}
+
 func (stream Stream[T]) Sort(sortFunction func(a, b T) bool) Stream[T] {
 	ns := mergeSort[T](stream.ts, sortFunction)
 	return Stream[T]{ts: ns}

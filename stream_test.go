@@ -110,3 +110,9 @@ func TestStream_ForEach(t *testing.T) {
 
 	assert.Equal(t, []string{"Hello", "World"}, forEach)
 }
+
+func TestStream_Reduce(t *testing.T) {
+	numbers := []int{1, 2, 3}
+	sum := Of[int](numbers).Reduce(0, func(a, b int) int { return a + b })
+	assert.Equal(t, 6, sum)
+}
