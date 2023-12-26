@@ -1,4 +1,4 @@
-module stream
+module github.com/beglaryh/stream
 
 go 1.21
 
